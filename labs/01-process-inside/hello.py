@@ -1,7 +1,7 @@
 
 import ctypes
 
-kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+kernel32 = ctypes.windll.kernel32
 kernel32.GetCurrentProcessId.restype = ctypes.c_ulong
 
 pid = kernel32.GetCurrentProcessId()
