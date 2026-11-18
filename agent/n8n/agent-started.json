@@ -1,0 +1,79 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-started",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f66bea77-70b3-403f-b134-a01e0db470a1",
+      "name": "Webhook",
+      "webhookId": "135713f5-cb43-42f4-a020-c1c1ac00e08f"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11434/api/generate",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "qwen2.5:0.5b"
+            },
+            {
+              "name": "prompt",
+              "value": "=Проанализируй событие запуска системного агента. Ответь кратко на русском языке.  Событие: {{ $json.body.event }} Операционная система: {{ $json.body.os }} PID: {{ $json.body.pid }} Процессоры: {{ $json.body.cpus }} Размер страницы: {{ $json.body.page_size }} Компьютер: {{ $json.body.host }}  Составь короткое сообщение о запуске агента."
+            },
+            {
+              "name": "stream",
+              "value": "={{ false }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "c3197122-e991-4b86-a4a8-6375e3bcb08f",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "829ff0ec-917a-479f-878e-4a40618ebb27",
+  "meta": {
+    "instanceId": "ec0382090490085a4204d042370f68a8d93d65292d8ea6f88aa3b9f73aea463f"
+  },
+  "nodeGroups": [],
+  "id": "iBXs7vv3v8pHPtN6",
+  "tags": []
+}

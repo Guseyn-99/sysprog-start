@@ -47,6 +47,23 @@ def get_info():
     }
 
 
+
 if __name__ == "__main__":
+    import urllib.request
+
     message = {"event": "agent_started", "os": sys.platform, **get_info()}
+
     print(json.dumps(message, ensure_ascii=False, indent=2))
+
+    url = "http://localhost:5678/webhook/agent-started"
+    data = json.dumps(message).encode("utf-8")
+
+    request = urllib.request.Request(
+        url,
+        data=data,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+
+    with urllib.request.urlopen(request, timeout=10) as response:
+        print("n8n:", response.status)
